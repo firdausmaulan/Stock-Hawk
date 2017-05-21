@@ -50,6 +50,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/stock_hawk_provider_info" />
         </receiver>
+
+        <service
+            android:name=".BackgroundService"
+            android:enabled="true" />
     </application>
 
 </manifest>
