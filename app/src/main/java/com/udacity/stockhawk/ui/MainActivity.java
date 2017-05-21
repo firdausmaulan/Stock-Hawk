@@ -121,15 +121,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         listCompany.clear();
         listStock.clear();
         listUpDown.clear();
-        QuoteSyncJob.syncImmediately(this);
+
+        if (networkUp()) {
+            QuoteSyncJob.syncImmediately(this);
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+            Toasty.error(this, getString(R.string.toast_no_connectivity), Toast.LENGTH_LONG).show();
+        }
 
         if (!networkUp() && adapter.getItemCount() == 0) {
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_network));
             error.setVisibility(View.VISIBLE);
-        } else if (!networkUp()) {
-            swipeRefreshLayout.setRefreshing(false);
-            Toasty.error(this, getString(R.string.toast_no_connectivity), Toast.LENGTH_LONG).show();
         } else if (PrefUtils.getStocks(this).size() == 0) {
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_stocks));

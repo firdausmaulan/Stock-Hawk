@@ -28,7 +28,9 @@ public class BackgroundService extends Service {
         Log.i("Service", "MyService onStartCommand");
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, StockHawkProvider.class));
-        StockHawkProvider.updateAppWidget(this, appWidgetManager, appWidgetIds[0]);
+        if (appWidgetIds.length != 0) {
+            StockHawkProvider.updateAppWidget(this, appWidgetManager, appWidgetIds[0]);
+        }
         return Service.START_STICKY;
     }
 
